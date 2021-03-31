@@ -1185,6 +1185,8 @@ exports.i32RoleRemoval = function () {
           assert(Object.keys(res).length === 0)
 
           acl.whatResources('role2', function (err, res) {
+            console.log('{res}');
+            console.log('========', assert.include(res.res1), 'perm1', 'perm2', 'perm3');
             assert.deepEqual(res.res1.sort(), [ 'perm1', 'perm2', 'perm3' ])
             done()
           })

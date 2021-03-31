@@ -2,12 +2,17 @@ var Acl = require('../')
   , tests = require('./tests')
   , backendTests = require('./backendtests');
 
+const url = 'mongodb://localhost:27017'
+const dbName = 'acltest'
+
 describe('MongoDB - Default', function () {
   before(function (done) {
     var self = this
       , mongodb = require('mongodb')
 
-    mongodb.connect('mongodb://localhost:27017/acltest',function(error, db) {
+    mongodb.connect(url, function(error, client) {
+      if (error) done(error)
+      const db = client.db(dbName)
       db.dropDatabase(function () {
         self.backend = new Acl.mongodbBackend(db, "acl")
         done()
@@ -24,7 +29,10 @@ describe('MongoDB - useSingle', function () {
     var self = this
       , mongodb = require('mongodb')
 
-    mongodb.connect('mongodb://localhost:27017/acltest',function(error, db) {
+    mongodb.connect('mongodb://localhost:27017/acltest',function(error, client) {
+      if (error) done(error)
+      if (error) done(error)
+      const db = client.db(dbName)
       db.dropDatabase(function () {
         self.backend = new Acl.mongodbBackend(db, "acl", true)
         done()
